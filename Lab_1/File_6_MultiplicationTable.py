@@ -8,4 +8,3 @@ while i < 6:
         j += 1
         if j % 6 == 0: print('\n')
     i += 1
-    
