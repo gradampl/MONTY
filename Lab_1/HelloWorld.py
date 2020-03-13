@@ -1,7 +1,7 @@
 print("Witaj świecie!")
 print()
-number1 = 12.5
-number2 = 34.3
+number1 = 3
+number2 = 2.0
 
 print("Działania arytmetyczne na liczbach: num1 = ", end=''
       + str(number1)  + " i num2 = " + str(number2))
