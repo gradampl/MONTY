@@ -6,15 +6,20 @@ fahrenheit = None
 kelvin = None
 celsius = None
 
-
 ################################## Functions #######################################
 
 def cannot_calculate():
     print('Nie ma tak niskich temperatur.')
 
 def give_degrees():
-    degs = float(input('Podaj liczbę stopni: \n'))
+    degs = input('Podaj liczbę stopni: \n')
+    try:
+        float(degs)
+        return degs
+    except ValueError:
+            degs = input('Podaj liczbę stopni: \n')
     return float(degs)
+
 
 def scale_unknown():
     print('Nie znam takiej skali.')
@@ -36,7 +41,7 @@ def message(choice):
 ###########################################################################
 
 degrees = give_degrees()
-scale = input('Podaj skalę (C = Celsjusza, F = Fahrenheita, K = Kelvina: \n').lower()
+scale = input('Podaj skalę (C = Celsjusza, F = Fahrenheita, K = Kelvina) : \n').lower()
 
 while not (scale == 'c' or scale == 'f' or scale == 'k'):
     scale_unknown()
