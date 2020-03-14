@@ -17,7 +17,6 @@ def give_coeficient(x):
         coef = input('Podaj współczynnik '+ str(abc)+':\n')
         try:
             ok = float(coef)
-            return float(coef)
         except ValueError:
             print('Nie znam takiej liczby.\n')
 
