@@ -1,15 +1,42 @@
 import math
 
+################################## Function #######################################
+
+def give_coeficient(x):
+
+    if x == 'a':
+       abc = 'a'
+    elif x == 'b':
+        abc = 'b'
+    else:
+        abc = 'c'
+
+    ok = False
+
+    while ok == False:
+        coef = input('Podaj współczynnik '+ str(abc)+':\n')
+        try:
+            ok = float(coef)
+            return float(coef)
+        except ValueError:
+            print('Nie znam takiej liczby.\n')
+
+    return float(coef)
+
+###########################################################################
+
+
 print('Rozwiążę równanie kwadratowe postaci ax^2 + bx + c = 0.')
 print()
-a = float(input('Podaj współczynnik a (tzn. współczynnik przy x^2). \n'))
+
+a = give_coeficient('a')
 
 while a == 0:
     print("Jeśli a = 0, to równanie nie jest kwadratowe.")
-    a = int(input('Podaj współczynnik a \n'))
+    a = give_coeficient('a')
 
-b = float(input('Podaj współczynnik b (tzn. współczynnik przy x).\n'))
-c = float(input('Podaj współczynnik c (tzn. wyraz wolny równania)\n'))
+b = give_coeficient('b')
+c = give_coeficient('c')
 
 delta = b**2 - 4*a*c
 

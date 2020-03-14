@@ -12,12 +12,17 @@ def cannot_calculate():
     print('Nie ma tak niskich temperatur.')
 
 def give_degrees():
-    degs = input('Podaj liczbę stopni: \n')
-    try:
-        float(degs)
-        return float(degs)
-    except ValueError:
-            degs = input('Podaj liczbę stopni: \n')
+
+    ok = False
+
+    while ok == False:
+        degs = input('Podaj liczbę stopni: \n')
+        try:
+            ok = float(degs)
+            return float(degs)
+        except ValueError:
+            print('Nie znam takiej liczby.\n')
+
     return float(degs)
 
 
