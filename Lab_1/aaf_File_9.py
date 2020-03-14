@@ -15,7 +15,7 @@ def give_degrees():
     degs = input('Podaj liczbę stopni: \n')
     try:
         float(degs)
-        return degs
+        return float(degs)
     except ValueError:
             degs = input('Podaj liczbę stopni: \n')
     return float(degs)
