@@ -2,13 +2,12 @@ print('Jestem konwerterem temperatury. Jeśli podasz mi temperaturę, np. w stop
 print('policzę, ile to jest w st. Fahrenheita i Kelvina.\n')
 
 degrees = None
-
 fahrenheit = None
 kelvin = None
 celsius = None
-ok = None
 
-################################## Teraz funkcje #######################################
+
+################################## Functions #######################################
 
 def cannot_calculate():
     print('Nie ma tak niskich temperatur.')
@@ -34,7 +33,7 @@ def message(choice):
         print('to ', fahrenheit, ' stopni w skali Farenheita')
         print('i ', celsius, 'stopni w skali Celsjusza.')
 
-################################## Koniec funkcji #######################################
+###########################################################################
 
 degrees = give_degrees()
 scale = input('Podaj skalę (C = Celsjusza, F = Fahrenheita, K = Kelvina: \n').lower()
