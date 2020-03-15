@@ -11,6 +11,7 @@ celsius = None
 def cannot_calculate():
     print('Nie ma tak niskich temperatur.')
 
+
 def get_degrees():
     ok = False
     while ok == False:
@@ -21,12 +22,14 @@ def get_degrees():
             print('Nie znam takiej liczby.\n')
     return float(degs)
 
+
 def convert_to_celsius(x):
     if x == 'f':
         celsius = 5 / 9 * (degrees - 32)
     else:
         celsius = degrees - 273.15
     return celsius
+
 
 def convert_to_fahrenheit(x):
     if x == 'c':
@@ -35,6 +38,7 @@ def convert_to_fahrenheit(x):
         fahrenheit = 9 / 5 * (degrees - 273.15) + 32
     return fahrenheit
 
+
 def convert_to_kelvin(x):
     if x == 'c':
         kelvin = degrees + 273.15
@@ -42,26 +46,44 @@ def convert_to_kelvin(x):
         kelvin = 5 / 9 * (degrees - 32) + 273.15
     return kelvin
 
+
 def get_scale():
     scale = input('Podaj skalę (C = Celsjusza, F = Fahrenheita, K = Kelvina) : \n').lower()
     return scale
 
+
 def scale_unknown():
     print('Nie znam takiej skali.')
 
+
 def message(choice):
     if(choice == 'c'):
-        print('Temperatura ', degrees, ' stopni Celsjusza')
-        print('to ', kelvin, ' stopni w skali Kelvina')
-        print('i ', fahrenheit, 'stopni w skali Farenheita.')
-    elif(choice == 'f'):
-        print('Temperatura ', degrees, ' stopni Farenheita')
-        print('to ', kelvin, ' stopni w skali Kelvina')
-        print('i ', celsius, 'stopni w skali Celsjusza.')
+        first = 'Celsjusza'
+        second = kelvin
+        third = 'Kelvina'
+        fourth = fahrenheit
+        fifth = 'Fahrenheita'
+        message_content(first, second, third, fourth, fifth)
+    elif (choice == 'f'):
+        first = 'Fahrenheita'
+        second = celsius
+        third = 'Celsjusza'
+        fourth = kelvin
+        fifth = 'Kelvina'
+        message_content(first, second, third, fourth, fifth)
     else:
-        print('Temperatura ', degrees, ' stopni Kelvina')
-        print('to ', fahrenheit, ' stopni w skali Farenheita')
-        print('i ', celsius, 'stopni w skali Celsjusza.')
+        first = 'Kelvina'
+        second = celsius
+        third = 'Celsjusza'
+        fourth = fahrenheit
+        fifth = 'Fahrenheita'
+        message_content(first, second, third, fourth, fifth)
+
+
+def message_content(first, second, third, fourth, fifth):
+    print('Temperatura ', degrees, 'stopni ' + str(first)+',')
+    print('to', second, 'stopni w skali ' + str(third))
+    print('i ', fourth, 'stopni w skali ' + str(fifth) + '.')
 
 ###########################################################################
 
