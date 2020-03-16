@@ -81,9 +81,9 @@ def message(choice):
 
 
 def message_content(first, second, third, fourth, fifth):
-    print('Temperatura ', degrees, 'stopni ' + str(first)+',')
-    print('to', second, 'stopni w skali ' + str(third))
-    print('i ', fourth, 'stopni w skali ' + str(fifth) + '.')
+    print('Temperatura', "%.2f"%degrees, 'stopni ' + str(first)+',')
+    print('to', "%.2f"%second, 'stopni w skali ' + str(third))
+    print('i', "%.2f"%fourth, 'stopni w skali ' + str(fifth) + '.')
 
 ###########################################################################
 
