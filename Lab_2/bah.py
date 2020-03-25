@@ -42,5 +42,5 @@ for i in range(12):
 print(list(sorted(months_dictionary.items(), key =
              lambda kv:(kv[1], kv[0]))))
 
-# Result: 
+# Result:
 # [('styczeń', 1), ('luty', 2), ('marzec', 3), ('kwiecień', 4), ('maj', 5), ('czerwiec', 6), ('lipiec', 7), ('sierpień', 8), ('wrzesień', 9), ('październik', 10), ('listopad', 11), ('grudzień', 12)]
