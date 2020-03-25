@@ -31,7 +31,7 @@ for i in range(12):
         months_dictionary[months[i]] = 9
     elif 'kw' in months[i]:
         months_dictionary[months[i]] = 4
-    elif 'mar' in months[i]:
+    else:
         months_dictionary[months[i]] = 3
 
 
