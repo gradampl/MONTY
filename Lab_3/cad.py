@@ -1,13 +1,16 @@
 def greeting():
     should_continue = True
+    j = 1
     while should_continue:
-        choice = input("Jeśli chcesz, żebym zamienił liczbę rzymską na arabską, wciśnij 't'."\
-                       "\nJeśli chcesz zakończyć program, wciśnij 'n'.\n")
+        choice = input("Uruchomić program po raz {} ?"\
+                       "\nTak - wciśnij 't'.\
+                        \nNie - wciśnij 'n'.\n".format(j))
         if choice.lower() !='t' and choice.lower() !='n':
-            print('Nie wiem, co mam zrobić.')
+            print('\nNie wiem, co mam zrobić.\n')
         elif choice.lower() == 'n':
             should_continue = False
         else:
+            j += 1
             start()
 
 def get_number():
@@ -23,8 +26,6 @@ def check_input(number):
         return True
     else:
         return False
-
-
 
 
 def switch_to_arabic(number):
@@ -53,16 +54,12 @@ def switch_to_arabic(number):
 
 def calculate(input_chars):
 
-    reversed_list = []
-
-    while input_chars != []:
-        reversed_list.append(int(input_chars.pop()))
-
     arabic = 0
     previous = 0
+    j = len(input_chars)-1
 
-    for i in range(len(reversed_list)):
-        current = reversed_list[i]
+    for i in range(len(input_chars)):
+        current = input_chars[j-i]
         if current >= previous:
             arabic += current
         else:
@@ -74,6 +71,7 @@ def calculate(input_chars):
 
 
 def start():
+
     number = None
     inputOK = False
 
@@ -82,7 +80,7 @@ def start():
         inputOK = check_input(number.upper())
 
     switched = switch_to_arabic(number.lower())
-    print(calculate(switched))
+    print("{} = ".format(number.upper()) + str(calculate(switched)) + "\n")
 
 # I II III IV V VI VII VIII IX X XI XII XIII XIV XV XVI XVII XVIII XIX XX XXI XXII XXIII XIV XXV
 
