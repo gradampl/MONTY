@@ -2,8 +2,11 @@ def wrong_format():
     print("Niewłaściwy format wprowadzonych danych.\n")
 
 
-def get_input():
+def formally_wrong():
+    print("To nie jest formalnie poprawny nr PESEL.")
 
+
+def get_input():
     user_input = None
     is_len_correct = False
     is_numeric = False
@@ -21,38 +24,112 @@ def get_input():
                 break
             else:
                 is_numeric = True
-
-    return user_input
+    calculate_sum(user_input)
 
 
 def calculate_sum(user_input):
     sum = 0
-    j = 0
-    while j<4:
-        if j <= 1:
-            for i in range((0+j),(9+j),4):
-                sum += (9-(2*j))*int(user_input[i])
-        else:
-            for i in range((0 + j), (5 + j), 4):
-                sum += (3-((j-1)*(j-2)))*int(user_input[i])
-        j += 1
-
-    return sum
+    weight = [9,7,3,1]
+    for i in range(0,10):
+        sum = sum + weight[i%4] * int(user_input[i])
+    check_sum(sum,user_input)
 
 
 
 def check_sum(sum,user_input):
     if sum%10 != int(user_input[-1]):
-        return False
+        formally_wrong()
+        get_input()
     else:
-        return True
+        correct_date(user_input)
+
+
+def correct_date(user_input):
+
+    months = {'01': 31, '02': 28, '03': 31, '04': 30,
+              '05': 31, '06': 30, '07': 31, '08': 31,
+              '09': 30, '10': 31, '11': 30, '12': 31}
+
+    m = str(set_month(user_input))
+    d = int(set_day(user_input))
+    y = int(set_year(user_input))
+
+    is_leap = None
+
+    if m == '02' and d == 29:
+        if y % 4 == 0:
+            is_leap = True
+            # print('+')
+        if y % 100 == 0:
+            is_leap = False
+        if y % 400 == 0:
+            is_leap = True
+            print('++')
+        if is_leap != True:
+            formally_wrong()
+            get_input()
+        else:
+            print_info(user_input)
+
+    else:
+        if m in months and d in range(1,(int(months[str(m)])+1)):
+            print_info(user_input)
+        else:
+            formally_wrong()
+            get_input()
+
+
+
+def set_month(user_input):
+    month = None
+    if int(user_input[2])%2==0:
+        month = '0'+str(user_input[3])
+    else:
+        month = '1'+str(user_input[3])
+    return month
+
+
+
+def set_year(user_input):
+    year = None
+    if int(user_input[2])==8 or int(user_input[2])==9:
+        year = '18'+ str(user_input[0]) + str(user_input[1])
+    else:
+        i = 0
+        k = 0
+        while i <= 6:
+            if int(user_input[2])==i or int(user_input[2])==i+1:
+                year = str(int(19+(i-k))) + str(user_input[0]) + str(user_input[1])
+                break
+            k += 1
+            i += 2
+    return year
+
+
+def set_day(user_input):
+    day = str(user_input[4]) + str(user_input[5])
+    return day
+
+
+def set_gender(user_input):
+    gender = None
+    if int(user_input[9])%2==0:
+        gender = 'kobieta'
+    else:
+        gender = 'mężczyzna'
+    return gender
+
+
+def print_info(user_input):
+    gender = set_gender(user_input)
+    day = set_day(user_input)
+    month = set_month(user_input)
+    year = set_year(user_input)
+    print("{0}, data urodzenia: {1}.{2}.{3}".format(gender,day,month,year))
+
 
 # PESEL PESEL PESEL PESEL PESEL PESEL PESEL PESEL PESEL PESEL PESEL PESEL PESEL PESEL #
 
-user_input = get_input()
-sum = calculate_sum(user_input)
-print(check_sum(sum,user_input))
-
-
+get_input()
 
 
