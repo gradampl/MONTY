@@ -10,7 +10,6 @@ def get_input():
     user_input = None
     is_len_correct = False
     is_numeric = False
-
     while is_len_correct !=True or is_numeric !=True:
         user_input = input("Podaj numer PESEL: \n")
         if len(user_input) == 11:
@@ -33,7 +32,6 @@ def calculate_sum(user_input):
     for i in range(0,10):
         sum = sum + weight[i%4] * int(user_input[i])
     check_sum(sum,user_input)
-
 
 
 def check_sum(sum,user_input):
@@ -59,25 +57,21 @@ def correct_date(user_input):
     if m == '02' and d == 29:
         if y % 4 == 0:
             is_leap = True
-            # print('+')
         if y % 100 == 0:
             is_leap = False
         if y % 400 == 0:
             is_leap = True
-            print('++')
         if is_leap != True:
             formally_wrong()
             get_input()
         else:
             print_info(user_input)
-
     else:
         if m in months and d in range(1,(int(months[str(m)])+1)):
             print_info(user_input)
         else:
             formally_wrong()
             get_input()
-
 
 
 def set_month(user_input):
@@ -87,7 +81,6 @@ def set_month(user_input):
     else:
         month = '1'+str(user_input[3])
     return month
-
 
 
 def set_year(user_input):
