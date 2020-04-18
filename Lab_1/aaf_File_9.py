@@ -1,15 +1,19 @@
-print('Jestem konwerterem temperatury. Jeśli podasz mi temperaturę, np. w stopniach Celsjusza,')
-print('policzę, ile to jest w st. Fahrenheita i Kelvina.\n')
-
-degrees = None
-fahrenheit = None
-kelvin = None
-celsius = None
-
 ################################## Functions #######################################
+def greeting():
+    print('Jestem konwerterem temperatury. Jeśli podasz mi temperaturę, np. w stopniach Celsjusza,')
+    print('policzę, ile to jest w st. Fahrenheita i Kelvina.\n')
+    get_scale()
+
+
 
 def cannot_calculate():
     print('Nie ma tak niskich temperatur.')
+
+
+
+def give_scale():
+    print('Podaj skalę (C = Celsjusza, F = Fahrenheita, K = Kelvina) : \n')
+
 
 
 def get_degrees():
@@ -23,7 +27,49 @@ def get_degrees():
     return float(degs)
 
 
-def convert_to_celsius(x):
+
+
+def get_scale():
+    give_scale()
+    scale = input().lower()
+    while not (scale == 'c' or scale == 'f' or scale == 'k'):
+        scale_unknown()
+        scale = input().lower()
+    prepare_to_convert(scale)
+
+
+
+def prepare_to_convert(scale):
+    degrees = get_degrees()
+    if scale == 'c':
+        while degrees < -273.15:
+            cannot_calculate()
+            degrees = get_degrees()
+        fahrenheit = convert_to_fahrenheit('c', degrees)
+        kelvin = convert_to_kelvin('c', degrees)
+        message('c', degrees, fahrenheit, kelvin)
+
+    elif scale == 'f':
+        while degrees < -459.67:
+            cannot_calculate()
+            degrees = get_degrees()
+        celsius = convert_to_celsius('f', degrees)
+        kelvin = convert_to_kelvin('f', degrees)
+        message('f', degrees, celsius, kelvin)
+
+    elif scale == 'k':
+        while degrees < 0:
+            cannot_calculate()
+            degrees = get_degrees()
+        celsius = convert_to_celsius('k', degrees)
+        fahrenheit = convert_to_fahrenheit('k', degrees)
+        message('k', degrees, celsius, fahrenheit)
+
+
+
+
+def convert_to_celsius(x, degs):
+    degrees = degs
     if x == 'f':
         celsius = 5 / 9 * (degrees - 32)
     else:
@@ -31,7 +77,10 @@ def convert_to_celsius(x):
     return celsius
 
 
-def convert_to_fahrenheit(x):
+
+
+def convert_to_fahrenheit(x, degs):
+    degrees = degs
     if x == 'c':
         fahrenheit = 9 / 5 * degrees + 32
     else:
@@ -39,7 +88,10 @@ def convert_to_fahrenheit(x):
     return fahrenheit
 
 
-def convert_to_kelvin(x):
+
+
+def convert_to_kelvin(x, degs):
+    degrees = degs
     if x == 'c':
         kelvin = degrees + 273.15
     else:
@@ -47,73 +99,38 @@ def convert_to_kelvin(x):
     return kelvin
 
 
-def get_scale():
-    scale = input('Podaj skalę (C = Celsjusza, F = Fahrenheita, K = Kelvina) : \n').lower()
-    return scale
 
 
 def scale_unknown():
     print('Nie znam takiej skali.')
 
 
-def message(choice):
+
+
+def message(choice, degrees, scale1, scale2):
+    degs = degrees
+    second = scale1
+    fourth = scale2
     if(choice == 'c'):
         first = 'Celsjusza'
-        second = kelvin
-        third = 'Kelvina'
-        fourth = fahrenheit
-        fifth = 'Fahrenheita'
-        message_content(first, second, third, fourth, fifth)
+        third = 'Fahrenheita'
+        fifth = 'Kelvina'
     elif (choice == 'f'):
         first = 'Fahrenheita'
-        second = celsius
         third = 'Celsjusza'
-        fourth = kelvin
         fifth = 'Kelvina'
-        message_content(first, second, third, fourth, fifth)
     else:
         first = 'Kelvina'
-        second = celsius
         third = 'Celsjusza'
-        fourth = fahrenheit
         fifth = 'Fahrenheita'
-        message_content(first, second, third, fourth, fifth)
+    message_content(degs, first, second, third, fourth, fifth)
 
 
-def message_content(first, second, third, fourth, fifth):
-    print('Temperatura', "%.2f"%degrees, 'stopni ' + str(first)+',')
+def message_content(degrees, first, second, third, fourth, fifth):
+    print('Temperatura', "%.2f"% degrees, 'stopni ' + str(first)+',')
     print('to', "%.2f"%second, 'stopni w skali ' + str(third))
     print('i', "%.2f"%fourth, 'stopni w skali ' + str(fifth) + '.')
 
 ###########################################################################
 
-degrees = get_degrees()
-scale = get_scale()
-
-while not (scale == 'c' or scale == 'f' or scale == 'k'):
-    scale_unknown()
-    scale = get_scale()
-
-if scale == 'c':
-    while degrees < -273.15:
-        cannot_calculate()
-        degrees = get_degrees()
-    fahrenheit = convert_to_fahrenheit('c')
-    kelvin = convert_to_kelvin('c')
-    message('c')
-
-elif scale == 'f':
-    while degrees < -459.67:
-        cannot_calculate()
-        degrees = get_degrees()
-    celsius = convert_to_celsius('f')
-    kelvin = convert_to_kelvin('f')
-    message('f')
-
-elif scale == 'k':
-    while degrees < 0:
-        cannot_calculate()
-        degrees = get_degrees()
-    celsius = convert_to_celsius('k')
-    fahrenheit = convert_to_fahrenheit('k')
-    message('k')
+greeting()
