@@ -42,6 +42,6 @@ delta = b**2 - 4*a*c
 if delta < 0: print('Równanie nie ma rozwiązań w zbiorze liczb rzeczywistych.')
 elif delta == 0: print('Równanie ma jedno rozwiązanie: x1 = x2 =', -1*b / 2*a)
 else:
-    x1 = (-1*b - math.sqrt(b**2 - 4*a*c)) / 2*a
-    x2 = (-1*b + math.sqrt(b**2 - 4*a*c)) / 2*a
+    x1 = (-1*b - math.sqrt(b**2 - 4*a*c)) / (2*a)
+    x2 = (-1*b + math.sqrt(b**2 - 4*a*c)) / (2*a)
     print('Równanie ma dwa rozwiązania: x1 =', x1, ', x2 =', x2)
