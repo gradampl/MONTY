@@ -5,15 +5,12 @@ def greeting():
     get_scale()
 
 
-
 def cannot_calculate():
     print('Nie ma tak niskich temperatur.')
 
 
-
 def give_scale():
     print('Podaj skalę (C = Celsjusza, F = Fahrenheita, K = Kelvina) : \n')
-
 
 
 def get_degrees():
@@ -27,8 +24,6 @@ def get_degrees():
     return float(degs)
 
 
-
-
 def get_scale():
     give_scale()
     scale = input().lower()
@@ -36,7 +31,6 @@ def get_scale():
         scale_unknown()
         scale = input().lower()
     prepare_to_convert(scale)
-
 
 
 def prepare_to_convert(scale):
@@ -66,8 +60,6 @@ def prepare_to_convert(scale):
         message('k', degrees, celsius, fahrenheit)
 
 
-
-
 def convert_to_celsius(x, degs):
     degrees = degs
     if x == 'f':
@@ -75,8 +67,6 @@ def convert_to_celsius(x, degs):
     else:
         celsius = degrees - 273.15
     return celsius
-
-
 
 
 def convert_to_fahrenheit(x, degs):
@@ -88,8 +78,6 @@ def convert_to_fahrenheit(x, degs):
     return fahrenheit
 
 
-
-
 def convert_to_kelvin(x, degs):
     degrees = degs
     if x == 'c':
@@ -99,19 +87,15 @@ def convert_to_kelvin(x, degs):
     return kelvin
 
 
-
-
 def scale_unknown():
     print('Nie znam takiej skali.')
-
-
 
 
 def message(choice, degrees, scale1, scale2):
     degs = degrees
     second = scale1
     fourth = scale2
-    if(choice == 'c'):
+    if (choice == 'c'):
         first = 'Celsjusza'
         third = 'Fahrenheita'
         fifth = 'Kelvina'
@@ -127,9 +111,10 @@ def message(choice, degrees, scale1, scale2):
 
 
 def message_content(degrees, first, second, third, fourth, fifth):
-    print('Temperatura', "%.2f"% degrees, 'stopni ' + str(first)+',')
-    print('to', "%.2f"%second, 'stopni w skali ' + str(third))
-    print('i', "%.2f"%fourth, 'stopni w skali ' + str(fifth) + '.')
+    print('Temperatura', "%.2f" % degrees, 'stopni ' + str(first) + ',')
+    print('to', "%.2f" % second, 'stopni w skali ' + str(third))
+    print('i', "%.2f" % fourth, 'stopni w skali ' + str(fifth) + '.')
+
 
 ###########################################################################
 

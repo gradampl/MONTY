@@ -1,11 +1,11 @@
 import math
 
+
 ################################## Function #######################################
 
 def give_coeficient(x):
-
     if x == 'a':
-       abc = 'a'
+        abc = 'a'
     elif x == 'b':
         abc = 'b'
     else:
@@ -14,13 +14,14 @@ def give_coeficient(x):
     ok = False
 
     while ok == False:
-        coef = input('Podaj współczynnik '+ str(abc)+':\n')
+        coef = input('Podaj współczynnik ' + str(abc) + ':\n')
         try:
             ok = float(coef)
         except ValueError:
             print('Nie znam takiej liczby.\n')
 
     return float(coef)
+
 
 ###########################################################################
 
@@ -37,11 +38,13 @@ while a == 0:
 b = give_coeficient('b')
 c = give_coeficient('c')
 
-delta = b**2 - 4*a*c
+delta = b ** 2 - 4 * a * c
 
-if delta < 0: print('Równanie nie ma rozwiązań w zbiorze liczb rzeczywistych.')
-elif delta == 0: print('Równanie ma jedno rozwiązanie: x1 = x2 =', -1*b / 2*a)
+if delta < 0:
+    print('Równanie nie ma rozwiązań w zbiorze liczb rzeczywistych.')
+elif delta == 0:
+    print('Równanie ma jedno rozwiązanie: x1 = x2 =', -1 * b / 2 * a)
 else:
-    x1 = (-1*b - math.sqrt(b**2 - 4*a*c)) / (2*a)
-    x2 = (-1*b + math.sqrt(b**2 - 4*a*c)) / (2*a)
+    x1 = (-1 * b - math.sqrt(b ** 2 - 4 * a * c)) / (2 * a)
+    x2 = (-1 * b + math.sqrt(b ** 2 - 4 * a * c)) / (2 * a)
     print('Równanie ma dwa rozwiązania: x1 =', x1, ', x2 =', x2)

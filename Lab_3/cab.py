@@ -1,4 +1,4 @@
-basket = {'apple', 'pear', 'banana', 'plum','tangerine'}
+basket = {'apple', 'pear', 'banana', 'plum', 'tangerine'}
 
 # basket.add('apple')
 # Result: {'apple', 'pear', 'plum', 'banana', 'tangerine'}
