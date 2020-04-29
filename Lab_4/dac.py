@@ -6,12 +6,13 @@ def calculate_factorial_recursively(x):
         return a * calculate_factorial_recursively(a - 1)
 
 
-for i in range (1,7):
+for i in range (0,7):
     print(str(calculate_factorial_recursively(i)))
 
 
 # Result:
 #
+# 1
 # 1
 # 2
 # 6

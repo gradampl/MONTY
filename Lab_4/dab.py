@@ -1,17 +1,21 @@
 def calculate_factorial(x):
-    a = x
-    factorial = 1
-    i = 1
-    while i <= a:
-        factorial *= i
-        i += 1
+    # a = x
+    if x==0 or x==1:
+        return 1
+    else:
+        factorial = 1
+        i = 1
+        while i <= x:
+            factorial *= i
+            i += 1
     return factorial
 
-for i in range(1,7):
+for i in range(0,7):
     print(str(calculate_factorial(i)))
 
 # Result:
 #
+# 1
 # 1
 # 2
 # 6
