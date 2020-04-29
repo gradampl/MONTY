@@ -1,9 +1,8 @@
 def calculate_factorial_recursively(x):
-    a = x
-    if a == 0 or a == 1:
+    if x == 0 or x == 1:
         return 1
     else:
-        return a * calculate_factorial_recursively(a - 1)
+        return x * calculate_factorial_recursively(x - 1)
 
 
 for i in range (0,7):

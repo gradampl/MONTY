@@ -1,6 +1,5 @@
 def calculate_factorial(x):
-    # a = x
-    if x==0 or x==1:
+    if x == 0 or x == 1:
         return 1
     else:
         factorial = 1
@@ -10,7 +9,8 @@ def calculate_factorial(x):
             i += 1
     return factorial
 
-for i in range(0,7):
+
+for i in range(0, 7):
     print(str(calculate_factorial(i)))
 
 # Result:
