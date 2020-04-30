@@ -6,11 +6,11 @@ def add_squares(*params):
 
 
 print(str(add_squares(2, 3, 4)))
-print(str(add_squares(-2, 0.33, -4)))
+print(str(add_squares(-2, 0.33, -4, 1, 2)))
 
 # Result:
 #
 # 29
-# 20.1089
+# 25.1089
 #
 # Process finished with exit code 0
