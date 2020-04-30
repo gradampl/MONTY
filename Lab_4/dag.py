@@ -5,8 +5,8 @@ def add_squares(*params):
     return sum
 
 
-print(str(add_squares(2, 3, 4)))
-print(str(add_squares(-2, 0.33, -4, 1, 2)))
+print(add_squares(2, 3, 4))
+print(add_squares(-2, 0.33, -4, 1, 2))
 
 # Result:
 #
