@@ -4,9 +4,11 @@ def cg(n, a1, q):
 
 
 print(str(cg(5, 1, 2)))
+print(str(cg(4, 1, 3)))
 
-# Example result:
+# Example results:
 #
 # 16
+# 27
 #
 # Process finished with exit code 0
