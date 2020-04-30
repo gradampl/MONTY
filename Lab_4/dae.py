@@ -5,6 +5,7 @@ def isPalindrom(string):
     else:
         return False
 
+
 print(str(isPalindrom("Mononom")))
 print(str(isPalindrom("Pononom")))
 
