@@ -7,14 +7,10 @@ class Zespolone:
         self.Im = Im
 
     def __add__(self, other):
-        if isinstance(other, (float, int)):
-            other = Zespolone(other)
         return Zespolone(self.Rz + other.Rz,
                          self.Im + other.Im)
 
     def __sub__(self, other):
-        if isinstance(other, (float, int)):
-            other = Zespolone(other)
         return Zespolone(self.Rz - other.Rz,
                          self.Im - other.Im)
 
@@ -22,15 +18,15 @@ class Zespolone:
         return Zespolone(self.Rz * other.Rz - self.Im * other.Im,
                          self.Im * other.Rz + self.Rz * other.Im)
 
-    def __truediv__(self, other):
+    def __div__(self, other):
         r = float(other.Rz ** 2 + other.Im ** 2)
         return Zespolone((self.Rz * other.Rz + self.Im * other.Im) / r, (self.Im * other.Rz - self.Rz * other.Im) / r)
 
     def __abs__(self):
         return sqrt(self.Rz ** 2 + self.Im ** 2)
 
-    def __neg__(self):  # defines -c (c is Complex)
-        return Zespolone(-self.Rz, -self.Im)
+    def __conj__(self):
+        return Zespolone(self.Rz, -self.Im)
 
     def __eq__(self, other):
         return self.Rz == other.Rz and self.Im == other.Im
@@ -38,20 +34,20 @@ class Zespolone:
     def __ne__(self, other):
         return not self.__eq__(other)
 
-    def _illegal(self, op):
-        print('Działanie "%s" nie jest wykonalne na liczbach zespolonych.' % op)
+    def _illegal(self, operation):
+        print('Działanie "%s" nie jest wykonalne na liczbach zespolonych.' % operation)
 
     def __gt__(self, other):
-        self._illegal('>')
+        self._illegal(">")
 
     def __ge__(self, other):
-        self._illegal('>=')
+        self._illegal(">=")
 
     def __lt__(self, other):
-        self._illegal('<')
+        self._illegal("<")
 
     def __le__(self, other):
-        self._illegal('<=')
+        self._illegal("<=")
 
     def __pow__(self, n):
         a = Zespolone(1, 0)
@@ -75,14 +71,14 @@ z1 = Zespolone.__sub__(x, y)
 z2 = Zespolone.__sub__(y, x)
 z3 = Zespolone.__mul__(x, y)
 z4 = Zespolone.__mul__(y, x)
-z5 = Zespolone.__truediv__(x, y)
-z6 = Zespolone.__truediv__(y, x)
+z5 = Zespolone.__div__(x, y)
+z6 = Zespolone.__div__(y, x)
 z7 = Zespolone.__abs__(x)
 z8 = Zespolone.__abs__(y)
 z9 = Zespolone.__pow__(x, 2)
 z10 = Zespolone.__pow__(y, 2)
-z11 = Zespolone.__neg__(x)
-z12 = Zespolone.__neg__(y)
+z11 = Zespolone.__conj__(x)
+z12 = Zespolone.__conj__(y)
 z13 = Zespolone.__le__(x, y)
 z14 = Zespolone.__gt__(x, y)
 z15 = Zespolone.__eq__(x, y)
@@ -109,3 +105,38 @@ print("x == y " + repr(z15))
 print("y == x " + repr(z16))
 print("x == x " + repr(z17))
 print("y == y " + repr(z18))
+print(x > y)
+print(x < y)
+
+
+# Result:
+#
+# x = Z(2, 3)
+# y = Z(4, 5)
+# Działanie "<=" nie jest wykonalne na liczbach zespolonych.
+# Działanie ">" nie jest wykonalne na liczbach zespolonych.
+# x + y = Z(6, 8)
+# x - y = Z(-2, -2)
+# y - x = Z(2, 2)
+# x * y = Z(-7, 22)
+# y * x = Z(-7, 22)
+# x / y = Z(0.560976, 0.0487805)
+# y / x = Z(1.76923, -0.153846)
+# Moduł x = 3.605551275463989
+# Moduł y = 6.4031242374328485
+# x do potęgi 2 = Z(-5, 12)
+# y do potęgi 2 = Z(-9, 40)
+# Liczba sprzężona z x = Z(2, -3)
+# Liczba sprzężona z y = Z(4, -5)
+# x <= y None
+# y <= x None
+# x == y False
+# y == x False
+# x == x True
+# y == y True
+# Działanie ">" nie jest wykonalne na liczbach zespolonych.
+# None
+# Działanie "<" nie jest wykonalne na liczbach zespolonych.
+# None
+#
+# Process finished with exit code 0
