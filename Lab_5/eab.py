@@ -109,7 +109,6 @@ print("x == x " + repr(z17))
 print("y == y " + repr(z18))
 print("x != y " + repr(z19))
 
-
 # Result:
 #
 # x = (2, 3)
