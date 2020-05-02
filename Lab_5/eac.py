@@ -39,8 +39,6 @@ class Konto:
         except ValueError:
             self.__wrong_sum__()
 
-
-
     def __przelew_dane__(self, nr_konta, odbiorca, kwota, cel, in_out):
 
         def __odbiorca_nadawca__(inout):
@@ -61,20 +59,20 @@ class Konto:
             if in_out == "out":
                 if self.__wyplata__(kwota):
                     self.odbiorca = Odbiorca(self.adres, self.imie, self.nazwisko)
-                    self.__przelew_dane__(nr_konta, self.odbiorca, kwota, cel,in_out)
+                    self.__przelew_dane__(nr_konta, self.odbiorca, kwota, cel, in_out)
             else:
                 if self.__wyplata__(kwota):
                     self.odbiorca = Odbiorca(self.adres, self.imie, self.nazwisko)
-                    self.__przelew_dane__(nr_konta, self.odbiorca, kwota, cel,in_out)
+                    self.__przelew_dane__(nr_konta, self.odbiorca, kwota, cel, in_out)
 
     def __przelew_zew__(self, nr_konta, odbiorca, kwota, cel, in_out):
         if self.__check_number__(nr_konta):
             if in_out == "out":
                 if self.__wyplata__(kwota):
-                    self.__przelew_dane__(nr_konta, odbiorca, kwota, cel,in_out)
+                    self.__przelew_dane__(nr_konta, odbiorca, kwota, cel, in_out)
             else:
                 if self.__wplata__(kwota):
-                    self.__przelew_dane__(nr_konta, odbiorca, kwota, cel,in_out)
+                    self.__przelew_dane__(nr_konta, odbiorca, kwota, cel, in_out)
 
     def __check_number__(self, nr_konta):
         if len(str(nr_konta)) != 6:  # w rzeczywistosci !=26:
@@ -97,7 +95,7 @@ class Konto:
 
     def __podsumowanie__(self):
         i = len(self.operacje) - 1
-        print('\nKonto nr %d: dokonano wpłat i wypłat opiewających na kwoty:'%self.nr_konta)
+        print('\nKonto nr %d: dokonano wpłat i wypłat opiewających na kwoty:' % self.nr_konta)
         while i >= 0:
             print('PLN %.2f' % self.operacje.pop())
             i -= 1
