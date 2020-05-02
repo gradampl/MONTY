@@ -35,7 +35,7 @@ class Konto:
                     return self.stan_konta
                 else:
                     print('Nie można wykonać operacji. Stan konta wynosi: '
-                          'PLN {}'.format(self.stan_konta))
+                          'PLN %.2f' % self.stan_konta)
         except ValueError:
             self.__wrong_sum__()
 
@@ -52,7 +52,7 @@ class Konto:
         print('Adres' + __odbiorca_nadawca__(in_out), str(odbiorca.adres))
         print('Nr konta: ' + str(nr_konta))
         print('Tytułem: ' + str(cel))
-        print('PLN ' + str(kwota) + '\n')
+        print('PLN %.2f' % kwota + '\n')
 
     def __przelew_wew__(self, nr_konta, odbiorca, kwota, cel, in_out):
         if self.__check_number__(nr_konta):
@@ -145,7 +145,7 @@ konto3.__podsumowanie__()
 # Nieprawidłowy format kwoty.
 # Nieprawidłowy format kwoty.
 # Aktualny stan konta nr: 234567 wynosi PLN 10.00
-# Nie można wykonać operacji. Stan konta wynosi: PLN 10.0
+# Nie można wykonać operacji. Stan konta wynosi: PLN 10.00
 # Aktualny stan konta nr: 234567 wynosi PLN 200.00
 # Aktualny stan konta nr: 234567 wynosi PLN 189.00
 # Nieprawidłowy numer konta
@@ -154,7 +154,7 @@ konto3.__podsumowanie__()
 # Adres odbiorcy:  Dębowa 4, 20-123 Niepołomice
 # Nr konta: 123321
 # Tytułem: przesunięcie środków na konto oszczędnościowe
-# PLN 19
+# PLN 19.00
 #
 # Aktualny stan konta nr: 234567 wynosi PLN 170.00
 #
@@ -162,7 +162,7 @@ konto3.__podsumowanie__()
 # Adres odbiorcy:  Muniowicza 17, Szkaplerzyce
 # Nr konta: 234567
 # Tytułem: czynsz za maj 2020
-# PLN 90
+# PLN 90.00
 #
 # Aktualny stan konta nr: 234567 wynosi PLN 80.00
 #
@@ -170,21 +170,21 @@ konto3.__podsumowanie__()
 # Adres odbiorcy:  Kwiatowa 1, Domaniewice
 # Nr konta: 765432
 # Tytułem: za ręczniki
-# PLN 12.5
+# PLN 12.50
 #
 #
 # Nazwa nadawcy:  Włodzimierz Bednarek
 # Adres nadawcy:  Dębowa 4, 20-123 Niepołomice
 # Nr konta: 234567
 # Tytułem: za ręczniki
-# PLN 12.5
+# PLN 12.50
 #
 #
 # Nazwa odbiorcy:  Walery Stef
 # Adres odbiorcy:  Chrząszczyrzewoszyce Wielkie 13
 # Nr konta: 678910
 # Tytułem: założenie lokaty terminowej
-# PLN 2.7
+# PLN 2.70
 #
 # Aktualny stan konta nr: 765432 wynosi PLN 12.50
 # Aktualny stan konta nr: 678909 wynosi PLN 30.00
