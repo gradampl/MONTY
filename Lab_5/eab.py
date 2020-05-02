@@ -2,6 +2,7 @@ from math import sqrt
 
 
 class Zespolone:
+
     def __init__(self, Rz, Im):
         self.Rz = Rz
         self.Im = Im
@@ -35,19 +36,19 @@ class Zespolone:
         return not self.__eq__(other)
 
     def _illegal(self, operation):
-        print('Działanie "%s" nie jest wykonalne na liczbach zespolonych.' % operation)
+        return 'Działanie "%s" nie jest wykonalne na liczbach zespolonych.' % operation
 
     def __gt__(self, other):
-        self._illegal(">")
+        return self._illegal(">")
 
     def __ge__(self, other):
-        self._illegal(">=")
+        return self._illegal(">=")
 
     def __lt__(self, other):
-        self._illegal("<")
+        return self._illegal("<")
 
     def __le__(self, other):
-        self._illegal("<=")
+        return self._illegal("<=")
 
     def __pow__(self, n):
         a = Zespolone(1, 0)
@@ -59,7 +60,7 @@ class Zespolone:
         return '(%g, %g)' % (self.Rz, self.Im)
 
     def __repr__(self):
-        return 'Z' + str(self)
+        return str(self)
 
 
 x = Zespolone(2, 3)
@@ -85,6 +86,7 @@ z15 = Zespolone.__eq__(x, y)
 z16 = Zespolone.__eq__(y, x)
 z17 = Zespolone.__eq__(x, x)
 z18 = Zespolone.__eq__(y, y)
+z19 = Zespolone.__ne__(x, y)
 
 print("x + y = " + repr(z0))
 print("x - y = " + repr(z1))
@@ -97,46 +99,40 @@ print("Moduł x = " + repr(z7))
 print("Moduł y = " + repr(z8))
 print("x do potęgi 2 = " + repr(z9))
 print("y do potęgi 2 = " + repr(z10))
-print("Liczba sprzężona z x = " + repr(z11))
-print("Liczba sprzężona z y = " + repr(z12))
+print("Liczba sprzężona do x = " + repr(z11))
+print("Liczba sprzężona do y = " + repr(z12))
 print("x <= y " + repr(z13))
-print("y <= x " + repr(z14))
+print("y > x " + repr(z14))
 print("x == y " + repr(z15))
 print("y == x " + repr(z16))
 print("x == x " + repr(z17))
 print("y == y " + repr(z18))
-print(x > y)
-print(x < y)
+print("x != y " + repr(z19))
 
 
 # Result:
 #
-# x = Z(2, 3)
-# y = Z(4, 5)
-# Działanie "<=" nie jest wykonalne na liczbach zespolonych.
-# Działanie ">" nie jest wykonalne na liczbach zespolonych.
-# x + y = Z(6, 8)
-# x - y = Z(-2, -2)
-# y - x = Z(2, 2)
-# x * y = Z(-7, 22)
-# y * x = Z(-7, 22)
-# x / y = Z(0.560976, 0.0487805)
-# y / x = Z(1.76923, -0.153846)
+# x = (2, 3)
+# y = (4, 5)
+# x + y = (6, 8)
+# x - y = (-2, -2)
+# y - x = (2, 2)
+# x * y = (-7, 22)
+# y * x = (-7, 22)
+# x / y = (0.560976, 0.0487805)
+# y / x = (1.76923, -0.153846)
 # Moduł x = 3.605551275463989
 # Moduł y = 6.4031242374328485
-# x do potęgi 2 = Z(-5, 12)
-# y do potęgi 2 = Z(-9, 40)
-# Liczba sprzężona z x = Z(2, -3)
-# Liczba sprzężona z y = Z(4, -5)
-# x <= y None
-# y <= x None
+# x do potęgi 2 = (-5, 12)
+# y do potęgi 2 = (-9, 40)
+# Liczba sprzężona z x = (2, -3)
+# Liczba sprzężona z y = (4, -5)
+# x <= y 'Działanie "<=" nie jest wykonalne na liczbach zespolonych.'
+# y > x 'Działanie ">" nie jest wykonalne na liczbach zespolonych.'
 # x == y False
 # y == x False
 # x == x True
 # y == y True
-# Działanie ">" nie jest wykonalne na liczbach zespolonych.
-# None
-# Działanie "<" nie jest wykonalne na liczbach zespolonych.
-# None
+# x != y True
 #
 # Process finished with exit code 0
