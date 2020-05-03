@@ -53,7 +53,7 @@ class Konto:
         else:
             return rok
 
-    def __przelew_dane__(self, nr_konta, wlasciciel, kwota, cel, in_out):
+    def __przelew_dane__(self, nr_konta, wlasciciel, kwota, cel, in_out, jaki_przelew):
 
         def __odbiorca_nadawca__(inout):
             if inout == "in":
@@ -62,7 +62,8 @@ class Konto:
                 napis = ' odbiorcy: '
             return napis
 
-        print('\nNazwa' + __odbiorca_nadawca__(in_out),
+        print('\n........... Przelew {} .............'.format(jaki_przelew))
+        print('Nazwa' + __odbiorca_nadawca__(in_out),
               wlasciciel.nazwa_cz1, wlasciciel.nazwa_cz2)
         print('Adres' + __odbiorca_nadawca__(in_out), str(wlasciciel.adres))
         print('Nr konta' + __odbiorca_nadawca__(in_out) + '' + str(nr_konta))
@@ -70,29 +71,18 @@ class Konto:
         print('PLN %.2f' % kwota)
         print('Data wykonania przelewu: {}'.format(self.__time__(1)) + '\n')
 
-    def __przelew_wew__(self, nr_konta, wlasciciel, kwota, cel, in_out):
+    def __przelew__(self, nr_konta, wlasciciel, kwota, cel, in_out):
         if self.__check_number__(nr_konta):
             if in_out == "out":
                 if self.__wyplata__(kwota):
-                    self.wlasciciel = Wlasciciel(self.wlasciciel.adres,
-                                                 self.wlasciciel.nazwa_cz1,
-                                                 self.wlasciciel.nazwa_cz2)
-                    self.__przelew_dane__(nr_konta, self.wlasciciel, kwota, cel, in_out)
-            else:
-                if self.__wyplata__(kwota):
-                    self.wlasciciel = Wlasciciel(self.wlasciciel.adres,
-                                                 self.wlasciciel.nazwa_cz1,
-                                                 self.wlasciciel.nazwa_cz2)
-                    self.__przelew_dane__(nr_konta, self.wlasciciel, kwota, cel, in_out)
-
-    def __przelew_zew__(self, nr_konta, wlasciciel, kwota, cel, in_out):
-        if self.__check_number__(nr_konta):
-            if in_out == "out":
-                if self.__wyplata__(kwota):
-                    self.__przelew_dane__(nr_konta, wlasciciel, kwota, cel, in_out)
+                    self.__przelew_dane__(nr_konta,
+                                          wlasciciel, kwota, cel, in_out,
+                                          self.__jaki_przelew__(nr_konta))
             else:
                 if self.__wplata__(kwota):
-                    self.__przelew_dane__(nr_konta, wlasciciel, kwota, cel, in_out)
+                    self.__przelew_dane__(nr_konta,
+                                          wlasciciel, kwota, cel, in_out,
+                                          self.__jaki_przelew__(nr_konta))
 
     def __check_number__(self, nr_konta):
         if len(str(nr_konta)) != 6:  # w rzeczywistosci !=26:
@@ -106,6 +96,14 @@ class Konto:
                     self.__wrong_number__()
                     return False
         return True
+
+    def __jaki_przelew__(self, nr_konta):
+        if int(str(nr_konta)[0]) == 3 \
+                and int(str(nr_konta)[1]) == 2 \
+                and int(str(nr_konta)[2]) == 1:
+            return "wewnętrzny"
+        else:
+            return "zewnętrzny"
 
     def __wrong_number__(self):
         print('Nieprawidłowy numer konta')
@@ -121,6 +119,7 @@ class Konto:
             print('PLN %.2f' % self.operacje.pop())
             i -= 1
         self.__aktualny_stan_konta__()
+        print()
 
 
 class Wlasciciel:
@@ -141,30 +140,32 @@ konto1.__wplata__(190)
 konto1.__aktualny_stan_konta__()
 konto1.__wyplata__(11)
 konto1.__aktualny_stan_konta__()
-konto1.__przelew_wew__(12345j, Wlasciciel("", ""), 19, "przesunięcie środków na konto oszczędnościowe", "out")
-konto1.__przelew_wew__(123321, Wlasciciel("", ""), 19, "przesunięcie środków na konto oszczędnościowe", "out")
 konto1.__aktualny_stan_konta__()
-konto1.__przelew_zew__(234567, Wlasciciel("Muniowicza 17, Szkaplerzyce", 'SM "Raj Lokatora"')
-                       , 90, "czynsz za maj 2020", "out")
+konto1.__przelew__(321567, Wlasciciel("Muniowicza 17, Szkaplerzyce", 'SM "Raj Lokatora"')
+                   , 90, "czynsz za maj 2020", "out")
 konto1.__aktualny_stan_konta__()
 
 konto2 = Konto(Wlasciciel("Kwiatowa 1, Domaniewice", "Mada", "Wiszniewska"), 765432)
-konto1.__przelew_zew__(765432, Wlasciciel(konto2.wlasciciel.adres,
-                                          konto2.wlasciciel.nazwa_cz1,
-                                          konto2.wlasciciel.nazwa_cz2),
-                       12.50, "za ręczniki", "out")
-konto2.__przelew_zew__(234567, Wlasciciel(konto1.wlasciciel.adres,
-                                          konto1.wlasciciel.nazwa_cz1,
-                                          konto1.wlasciciel.nazwa_cz2),
-                       12.50, "za ręczniki", "in")
+konto1.__przelew__(765432, Wlasciciel(konto2.wlasciciel.adres,
+                                      konto2.wlasciciel.nazwa_cz1,
+                                      konto2.wlasciciel.nazwa_cz2),
+                   12.50, "za ręczniki", "out")
+konto2.__przelew__(234567, Wlasciciel(konto1.wlasciciel.adres,
+                                      konto1.wlasciciel.nazwa_cz1,
+                                      konto1.wlasciciel.nazwa_cz2),
+                   12.50, "za ręczniki", "in")
 konto3 = Konto(Wlasciciel("Chrząszczyrzewoszyce Wielkie 13", "Walery", "Stef"), 678909, 32.70)
-konto3.__przelew_wew__(678910, '', 2.70, "założenie lokaty terminowej", "out")
+konto3.__przelew__(321910, Wlasciciel("Chrząszczyrzewoszyce Wielkie 13", "Walery", "Stef"), 2.70,
+                   "założenie lokaty terminowej", "out")
 konto2.__aktualny_stan_konta__()
 konto3.__aktualny_stan_konta__()
 
 konto1.__podsumowanie__()
 konto2.__podsumowanie__()
 konto3.__podsumowanie__()
+konto3.__przelew__(678909,
+                   Wlasciciel("Chrząszczyrzewoszyce Wielkie 13", "Walery", "Stef"),
+                   32, "za zakupy", "out")
 
 # Result:
 #
@@ -175,43 +176,43 @@ konto3.__podsumowanie__()
 # Nie można wykonać operacji. Stan konta wynosi: PLN 10.00
 # Aktualny stan konta nr: 234567 wynosi PLN 200.00
 # Aktualny stan konta nr: 234567 wynosi PLN 189.00
-# Nieprawidłowy numer konta
+# Aktualny stan konta nr: 234567 wynosi PLN 189.00
 #
-# Nazwa odbiorcy:  Włodzimierz Bednarek
-# Adres odbiorcy:  Dębowa 4, 20-123 Niepołomice
-# Nr konta: 123321
-# Tytułem: przesunięcie środków na konto oszczędnościowe
-# PLN 19.00
-#
-# Aktualny stan konta nr: 234567 wynosi PLN 170.00
-#
+# ........... Przelew wewnętrzny .............
 # Nazwa odbiorcy:  SM "Raj Lokatora"
 # Adres odbiorcy:  Muniowicza 17, Szkaplerzyce
-# Nr konta: 234567
+# Nr konta odbiorcy: 321567
 # Tytułem: czynsz za maj 2020
 # PLN 90.00
+# Data wykonania przelewu: 2020-05-03
 #
-# Aktualny stan konta nr: 234567 wynosi PLN 80.00
+# Aktualny stan konta nr: 234567 wynosi PLN 99.00
 #
+# ........... Przelew zewnętrzny .............
 # Nazwa odbiorcy:  Mada Wiszniewska
 # Adres odbiorcy:  Kwiatowa 1, Domaniewice
-# Nr konta: 765432
+# Nr konta odbiorcy: 765432
 # Tytułem: za ręczniki
 # PLN 12.50
+# Data wykonania przelewu: 2020-05-03
 #
 #
+# ........... Przelew zewnętrzny .............
 # Nazwa nadawcy:  Włodzimierz Bednarek
 # Adres nadawcy:  Dębowa 4, 20-123 Niepołomice
-# Nr konta: 234567
+# Nr konta nadawcy: 234567
 # Tytułem: za ręczniki
 # PLN 12.50
+# Data wykonania przelewu: 2020-05-03
 #
 #
+# ........... Przelew wewnętrzny .............
 # Nazwa odbiorcy:  Walery Stef
 # Adres odbiorcy:  Chrząszczyrzewoszyce Wielkie 13
-# Nr konta: 678910
+# Nr konta odbiorcy: 321910
 # Tytułem: założenie lokaty terminowej
 # PLN 2.70
+# Data wykonania przelewu: 2020-05-03
 #
 # Aktualny stan konta nr: 765432 wynosi PLN 12.50
 # Aktualny stan konta nr: 678909 wynosi PLN 30.00
@@ -219,18 +220,21 @@ konto3.__podsumowanie__()
 # Konto nr 234567: dokonano wpłat i wypłat opiewających na kwoty:
 # PLN -12.50
 # PLN -90.00
-# PLN -19.00
 # PLN -11.00
 # PLN 190.00
 # PLN 10.00
-# Aktualny stan konta nr: 234567 wynosi PLN 67.50
+# Aktualny stan konta nr: 234567 wynosi PLN 86.50
+#
 #
 # Konto nr 765432: dokonano wpłat i wypłat opiewających na kwoty:
 # PLN 12.50
 # Aktualny stan konta nr: 765432 wynosi PLN 12.50
 #
+#
 # Konto nr 678909: dokonano wpłat i wypłat opiewających na kwoty:
 # PLN -2.70
 # Aktualny stan konta nr: 678909 wynosi PLN 30.00
+#
+# Nie można wykonać operacji. Stan konta wynosi: PLN 30.00
 #
 # Process finished with exit code 0
