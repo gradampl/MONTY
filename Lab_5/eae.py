@@ -41,6 +41,7 @@ print(wojownik.__moc_ataku__())
 print(lucznik.__moc_ataku__())
 wojownik.__zmien_zywotnosc__(19)
 print(wojownik.zywotnosc)
+print(wojownik.__moc_ataku__())
 
 # Result:
 #
@@ -49,5 +50,6 @@ print(wojownik.zywotnosc)
 # 4500
 # 6400
 # 150
+# 6750
 #
 # Process finished with exit code 0
