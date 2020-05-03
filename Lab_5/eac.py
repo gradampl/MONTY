@@ -1,9 +1,10 @@
+from datetime import datetime
+
+
 class Konto:
-    def __init__(self, imie, nazwisko, adres, nr_konta, stan_konta=0.0):
+    def __init__(self, wlasciciel, nr_konta, stan_konta=0.0):
         self.stan_konta = stan_konta
-        self.imie = imie
-        self.nazwisko = nazwisko
-        self.adres = adres
+        self.wlasciciel = wlasciciel
         self.nr_konta = nr_konta
         self.operacje = []
 
@@ -39,7 +40,20 @@ class Konto:
         except ValueError:
             self.__wrong_sum__()
 
-    def __przelew_dane__(self, nr_konta, odbiorca, kwota, cel, in_out):
+    def __time__(self, choice):
+        now = datetime.now()
+        data = now.date()
+        mies = now.date().month
+        rok = now.date().year
+
+        if choice == 1:
+            return data
+        elif choice == 2:
+            return mies
+        else:
+            return rok
+
+    def __przelew_dane__(self, nr_konta, wlasciciel, kwota, cel, in_out):
 
         def __odbiorca_nadawca__(inout):
             if inout == "in":
@@ -48,31 +62,37 @@ class Konto:
                 napis = ' odbiorcy: '
             return napis
 
-        print('\nNazwa' + __odbiorca_nadawca__(in_out), odbiorca.nazwa_cz1, odbiorca.nazwa_cz2)
-        print('Adres' + __odbiorca_nadawca__(in_out), str(odbiorca.adres))
-        print('Nr konta: ' + str(nr_konta))
+        print('\nNazwa' + __odbiorca_nadawca__(in_out),
+              wlasciciel.nazwa_cz1, wlasciciel.nazwa_cz2)
+        print('Adres' + __odbiorca_nadawca__(in_out), str(wlasciciel.adres))
+        print('Nr konta' + __odbiorca_nadawca__(in_out) + '' + str(nr_konta))
         print('Tytułem: ' + str(cel))
-        print('PLN %.2f' % kwota + '\n')
+        print('PLN %.2f' % kwota)
+        print('Data wykonania przelewu: {}'.format(self.__time__(1)) + '\n')
 
-    def __przelew_wew__(self, nr_konta, odbiorca, kwota, cel, in_out):
+    def __przelew_wew__(self, nr_konta, wlasciciel, kwota, cel, in_out):
         if self.__check_number__(nr_konta):
             if in_out == "out":
                 if self.__wyplata__(kwota):
-                    self.odbiorca = Odbiorca(self.adres, self.imie, self.nazwisko)
-                    self.__przelew_dane__(nr_konta, self.odbiorca, kwota, cel, in_out)
+                    self.wlasciciel = Wlasciciel(self.wlasciciel.adres,
+                                                 self.wlasciciel.nazwa_cz1,
+                                                 self.wlasciciel.nazwa_cz2)
+                    self.__przelew_dane__(nr_konta, self.wlasciciel, kwota, cel, in_out)
             else:
                 if self.__wyplata__(kwota):
-                    self.odbiorca = Odbiorca(self.adres, self.imie, self.nazwisko)
-                    self.__przelew_dane__(nr_konta, self.odbiorca, kwota, cel, in_out)
+                    self.wlasciciel = Wlasciciel(self.wlasciciel.adres,
+                                                 self.wlasciciel.nazwa_cz1,
+                                                 self.wlasciciel.nazwa_cz2)
+                    self.__przelew_dane__(nr_konta, self.wlasciciel, kwota, cel, in_out)
 
-    def __przelew_zew__(self, nr_konta, odbiorca, kwota, cel, in_out):
+    def __przelew_zew__(self, nr_konta, wlasciciel, kwota, cel, in_out):
         if self.__check_number__(nr_konta):
             if in_out == "out":
                 if self.__wyplata__(kwota):
-                    self.__przelew_dane__(nr_konta, odbiorca, kwota, cel, in_out)
+                    self.__przelew_dane__(nr_konta, wlasciciel, kwota, cel, in_out)
             else:
                 if self.__wplata__(kwota):
-                    self.__przelew_dane__(nr_konta, odbiorca, kwota, cel, in_out)
+                    self.__przelew_dane__(nr_konta, wlasciciel, kwota, cel, in_out)
 
     def __check_number__(self, nr_konta):
         if len(str(nr_konta)) != 6:  # w rzeczywistosci !=26:
@@ -95,21 +115,22 @@ class Konto:
 
     def __podsumowanie__(self):
         i = len(self.operacje) - 1
-        print('\nKonto nr %d: dokonano wpłat i wypłat opiewających na kwoty:' % self.nr_konta)
+        print('\nKonto nr %d: dokonano wpłat i wypłat '
+              'opiewających na kwoty:' % self.nr_konta)
         while i >= 0:
             print('PLN %.2f' % self.operacje.pop())
             i -= 1
         self.__aktualny_stan_konta__()
 
 
-class Odbiorca:
+class Wlasciciel:
     def __init__(self, adres, nazwa_cz1, nazwa_cz2=''):
         self.nazwa_cz1 = nazwa_cz1
         self.nazwa_cz2 = nazwa_cz2
         self.adres = adres
 
 
-konto1 = Konto("Włodzimierz", "Bednarek", "Dębowa 4, 20-123 Niepołomice", 234567)
+konto1 = Konto(Wlasciciel("Dębowa 4, 20-123 Niepołomice", "Włodzimierz", "Bednarek"), 234567)
 konto1.__aktualny_stan_konta__()
 konto1.__wyplata__("a")
 konto1.__wyplata__(-10)
@@ -120,17 +141,23 @@ konto1.__wplata__(190)
 konto1.__aktualny_stan_konta__()
 konto1.__wyplata__(11)
 konto1.__aktualny_stan_konta__()
-konto1.__przelew_wew__(12345j, Odbiorca("", ""), 19, "przesunięcie środków na konto oszczędnościowe", "out")
-konto1.__przelew_wew__(123321, Odbiorca("", ""), 19, "przesunięcie środków na konto oszczędnościowe", "out")
+konto1.__przelew_wew__(12345j, Wlasciciel("", ""), 19, "przesunięcie środków na konto oszczędnościowe", "out")
+konto1.__przelew_wew__(123321, Wlasciciel("", ""), 19, "przesunięcie środków na konto oszczędnościowe", "out")
 konto1.__aktualny_stan_konta__()
-konto1.__przelew_zew__(234567, Odbiorca("Muniowicza 17, Szkaplerzyce", 'SM "Raj Lokatora"')
+konto1.__przelew_zew__(234567, Wlasciciel("Muniowicza 17, Szkaplerzyce", 'SM "Raj Lokatora"')
                        , 90, "czynsz za maj 2020", "out")
 konto1.__aktualny_stan_konta__()
 
-konto2 = Konto("Mada", "Wiszniewska", "Kwiatowa 1, Domaniewice", 765432)
-konto1.__przelew_zew__(765432, Odbiorca(konto2.adres, konto2.imie, konto2.nazwisko), 12.50, "za ręczniki", "out")
-konto2.__przelew_zew__(234567, Odbiorca(konto1.adres, konto1.imie, konto1.nazwisko), 12.50, "za ręczniki", "in")
-konto3 = Konto("Walery", "Stef", "Chrząszczyrzewoszyce Wielkie 13", 678909, 32.70)
+konto2 = Konto(Wlasciciel("Kwiatowa 1, Domaniewice", "Mada", "Wiszniewska"), 765432)
+konto1.__przelew_zew__(765432, Wlasciciel(konto2.wlasciciel.adres,
+                                          konto2.wlasciciel.nazwa_cz1,
+                                          konto2.wlasciciel.nazwa_cz2),
+                       12.50, "za ręczniki", "out")
+konto2.__przelew_zew__(234567, Wlasciciel(konto1.wlasciciel.adres,
+                                          konto1.wlasciciel.nazwa_cz1,
+                                          konto1.wlasciciel.nazwa_cz2),
+                       12.50, "za ręczniki", "in")
+konto3 = Konto(Wlasciciel("Chrząszczyrzewoszyce Wielkie 13", "Walery", "Stef"), 678909, 32.70)
 konto3.__przelew_wew__(678910, '', 2.70, "założenie lokaty terminowej", "out")
 konto2.__aktualny_stan_konta__()
 konto3.__aktualny_stan_konta__()
