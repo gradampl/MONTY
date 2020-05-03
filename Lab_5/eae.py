@@ -37,6 +37,8 @@ lucznik = Lucznik("Kurt", 100, 8, 8)
 
 print(wojownik.pkty_taktyki, wojownik.sila_zrecznosc, wojownik.zywotnosc, wojownik.imie)
 print(lucznik.pkty_taktyki, lucznik.sila_zrecznosc, lucznik.zywotnosc, lucznik.imie)
+print(wojownik.__moc_ataku__())
+print(lucznik.__moc_ataku__())
 wojownik.__zmien_zywotnosc__(19)
 print(wojownik.zywotnosc)
 
@@ -44,6 +46,8 @@ print(wojownik.zywotnosc)
 #
 # 5 9 100 Seger
 # 8 8 100 Kurt
+# 4500
+# 6400
 # 150
 #
 # Process finished with exit code 0
