@@ -53,7 +53,7 @@ class Konto:
         else:
             return rok
 
-    def __przelew_dane__(self, nr_konta, wlasciciel, kwota, cel, in_out):
+    def __przelew_dane__(self, nr_konta, wlasciciel, kwota, cel, in_out, jaki_przelew):
 
         def __odbiorca_nadawca__(inout):
             if inout == "in":
@@ -62,7 +62,8 @@ class Konto:
                 napis = ' odbiorcy: '
             return napis
 
-        print('\nNazwa' + __odbiorca_nadawca__(in_out),
+        print('\n........... Przelew {} .............'.format(jaki_przelew))
+        print('Nazwa' + __odbiorca_nadawca__(in_out),
               wlasciciel.nazwa_cz1, wlasciciel.nazwa_cz2)
         print('Adres' + __odbiorca_nadawca__(in_out), str(wlasciciel.adres))
         print('Nr konta' + __odbiorca_nadawca__(in_out) + '' + str(nr_konta))
@@ -70,29 +71,18 @@ class Konto:
         print('PLN %.2f' % kwota)
         print('Data wykonania przelewu: {}'.format(self.__time__(1)) + '\n')
 
-    def __przelew_wew__(self, nr_konta, wlasciciel, kwota, cel, in_out):
+    def __przelew__(self, nr_konta, wlasciciel, kwota, cel, in_out):
         if self.__check_number__(nr_konta):
             if in_out == "out":
                 if self.__wyplata__(kwota):
-                    self.wlasciciel = Wlasciciel(self.wlasciciel.adres,
-                                                 self.wlasciciel.nazwa_cz1,
-                                                 self.wlasciciel.nazwa_cz2)
-                    self.__przelew_dane__(nr_konta, self.wlasciciel, kwota, cel, in_out)
-            else:
-                if self.__wyplata__(kwota):
-                    self.wlasciciel = Wlasciciel(self.wlasciciel.adres,
-                                                 self.wlasciciel.nazwa_cz1,
-                                                 self.wlasciciel.nazwa_cz2)
-                    self.__przelew_dane__(nr_konta, self.wlasciciel, kwota, cel, in_out)
-
-    def __przelew_zew__(self, nr_konta, wlasciciel, kwota, cel, in_out):
-        if self.__check_number__(nr_konta):
-            if in_out == "out":
-                if self.__wyplata__(kwota):
-                    self.__przelew_dane__(nr_konta, wlasciciel, kwota, cel, in_out)
+                    self.__przelew_dane__(nr_konta,
+                                          wlasciciel, kwota, cel, in_out,
+                                          self.__jaki_przelew__(nr_konta))
             else:
                 if self.__wplata__(kwota):
-                    self.__przelew_dane__(nr_konta, wlasciciel, kwota, cel, in_out)
+                    self.__przelew_dane__(nr_konta,
+                                          wlasciciel, kwota, cel, in_out,
+                                          self.__jaki_przelew__(nr_konta))
 
     def __check_number__(self, nr_konta):
         if len(str(nr_konta)) != 6:  # w rzeczywistosci !=26:
@@ -106,6 +96,14 @@ class Konto:
                     self.__wrong_number__()
                     return False
         return True
+
+    def __jaki_przelew__(self, nr_konta):
+        if int(str(nr_konta)[0]) == 3 \
+                and int(str(nr_konta)[1]) == 2 \
+                and int(str(nr_konta)[2]) == 1:
+            return "wewnętrzny"
+        else:
+            return "zewnętrzny"
 
     def __wrong_number__(self):
         print('Nieprawidłowy numer konta')
@@ -121,6 +119,7 @@ class Konto:
             print('PLN %.2f' % self.operacje.pop())
             i -= 1
         self.__aktualny_stan_konta__()
+        print()
 
 
 class Wlasciciel:
@@ -133,27 +132,27 @@ class Wlasciciel:
 class KontoPrywatne(Konto):
     def __przelew_wynagrodzenia__(self, nr_konta, pracodawca, kwota):
         opis = "Wynagrodzenie za miesiąc {} {} roku".format(self.__time__(2), self.__time__(3))
-        Konto.__przelew_zew__(self, nr_konta=nr_konta,
-                              wlasciciel=pracodawca, kwota=kwota, cel=opis, in_out="in")
+        Konto.__przelew__(self, nr_konta=nr_konta,
+                          wlasciciel=pracodawca, kwota=kwota, cel=opis, in_out="in")
 
 
 class KontoFirmowe(Konto):
-    def __przelew_do_ZUS__(self, nr_konta, oddział, rodzaj_skladki, za_kogo, kwota):
+    def __przelew_do_ZUS__(self, nr_konta, oddzial, rodzaj_skladki, za_kogo, kwota):
         beneficjent = za_kogo.nazwa_cz2 + " " + za_kogo.nazwa_cz1 + "\n" + za_kogo.adres
         opis = "Ubezpieczenie {} za miesiąc {} {} roku.\n" \
                "Beneficjent: {}" \
             .format(rodzaj_skladki, self.__time__(2), self.__time__(3), beneficjent)
-        Konto.__przelew_zew__(self, nr_konta=nr_konta,
-                              wlasciciel=oddział, kwota=kwota, cel=opis, in_out="out")
+        Konto.__przelew__(self, nr_konta=nr_konta,
+                          wlasciciel=oddzial, kwota=kwota, cel=opis, in_out="out")
 
-    def __przelew_do_US__(self, nr_konta, oddział, rodzaj_podatku, okres, kwota):
-        opis = 'Podatek {} za okres {}.'.format(rodzaj_podatku, okres)
-        Konto.__przelew_zew__(self, nr_konta=nr_konta,
-                              wlasciciel=oddział, kwota=kwota, cel=opis, in_out="out")
+    def __przelew_do_US__(self, nr_konta, oddzial, rodzaj_podatku, okres, kwota):
+        opis = 'Podatek {} za okres: {}.'.format(rodzaj_podatku, okres)
+        Konto.__przelew__(self, nr_konta=nr_konta,
+                          wlasciciel=oddzial, kwota=kwota, cel=opis, in_out="out")
 
 
 konto1 = KontoPrywatne(Wlasciciel("Słomiana 3, 13-432 Garwolin", "Karol", "Rebus"), 223344)
-konto1.__przelew_wynagrodzenia__(443322,
+konto1.__przelew_wynagrodzenia__(321322,
                                  Wlasciciel("Chwastowa 12, 13-400 Garwolin",
                                             'Spóldzielnia Pracy "Daremny trud"'),
                                  257.34)
@@ -175,14 +174,16 @@ konto2.__podsumowanie__()
 
 # Result:
 #
+# ........... Przelew wewnętrzny .............
 # Nazwa nadawcy:  Spóldzielnia Pracy "Daremny trud"
 # Adres nadawcy:  Chwastowa 12, 13-400 Garwolin
-# Nr konta nadawcy: 443322
+# Nr konta nadawcy: 321322
 # Tytułem: Wynagrodzenie za miesiąc 5 2020 roku
 # PLN 257.34
 # Data wykonania przelewu: 2020-05-03
 #
 #
+# ........... Przelew zewnętrzny .............
 # Nazwa odbiorcy:  Zakład Ubezpieczeń Społecznych, Oddział w Garwolinie
 # Adres odbiorcy:  Piska 4, 13-401 Garwolin
 # Nr konta odbiorcy: 999999
@@ -193,20 +194,23 @@ konto2.__podsumowanie__()
 # Data wykonania przelewu: 2020-05-03
 #
 #
+# ........... Przelew zewnętrzny .............
 # Nazwa odbiorcy:  Urząd Skarbowy w Garwolinie
 # Adres odbiorcy:  Koszarowa 2
 # Nr konta odbiorcy: 333333
-# Tytułem: Podatek obrotowy za okres styczeń - maj 2020.
+# Tytułem: Podatek obrotowy za okres: styczeń - maj 2020.
 # PLN 450.20
 # Data wykonania przelewu: 2020-05-03
+#
 #
 # Konto nr 223344: dokonano wpłat i wypłat opiewających na kwoty:
 # PLN 257.34
 # Aktualny stan konta nr: 223344 wynosi PLN 257.34
 #
+#
 # Konto nr 443322: dokonano wpłat i wypłat opiewających na kwoty:
 # PLN -450.20
 # PLN -13.45
 # Aktualny stan konta nr: 443322 wynosi PLN 23523.85
-
+#
 # Process finished with exit code 0
