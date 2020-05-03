@@ -131,7 +131,6 @@ class Wlasciciel:
 
 
 class KontoPrywatne(Konto):
-
     def __przelew_wynagrodzenia__(self, nr_konta, pracodawca, kwota):
         opis = "Wynagrodzenie za miesiąc {} {} roku".format(self.__time__(2), self.__time__(3))
         Konto.__przelew_zew__(self, nr_konta=nr_konta,
